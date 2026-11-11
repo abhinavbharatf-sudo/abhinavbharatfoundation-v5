@@ -5,17 +5,20 @@ import {
   Menu,
   X,
   ChevronDown,
-  Mail,
-  Phone,
-  Globe,
-  Accessibility,
-  LogIn,
   Landmark,
-  Shield,
   CheckCircle2,
+  ShieldCheck,
 } from 'lucide-react';
+import TopInfoBar from './TopInfoBar';
+import {
+  AshokaEmblemIcon,
+  NgoDarpanIcon,
+  UdyamMsmeIcon,
+  TaxSealIcon,
+  CsrMcaIcon,
+} from './OfficialEmblems';
 
-const navLinks = [
+const navLinks: { label: string; path: string; submenu?: { label: string; path: string; desc: string }[]; isNew?: boolean }[] = [
   { label: 'Home', path: '/' },
   {
     label: 'About',
@@ -32,6 +35,7 @@ const navLinks = [
     submenu: [
       { label: 'Maha-Agri', path: '/projects#maha-agri', desc: 'Agricultural transformation' },
       { label: 'Mee Swayamsevika', path: '/projects#swayamsevika', desc: 'Women empowerment' },
+      { label: 'Startup Fund', path: '/projects#startup', desc: 'Rural entrepreneurship mission' },
       { label: 'Drone Services', path: '/projects#drones', desc: 'Technology solutions' },
       { label: 'Training & EDP', path: '/projects#training', desc: 'Skill development' },
     ],
@@ -41,16 +45,54 @@ const navLinks = [
   { label: 'Gallery', path: '/gallery' },
   { label: 'Careers', path: '/careers' },
   { label: 'Transparency', path: '/transparency' },
+  { label: 'Start-Up Fund', path: '/projects#startup', isNew: true },
   { label: 'Contact', path: '/contact' },
 ];
 
-const registrations = [
-  { name: 'Section 8', full: 'Section 8 Company' },
-  { name: 'NGO Darpan', full: 'NGO Darpan (NITI Aayog)' },
-  { name: 'Udyam', full: 'Udyam MSME Registration' },
-  { name: '12A', full: '12A Income Tax Exemption' },
-  { name: '80G', full: '80G Tax Benefits' },
-  { name: 'CSR', full: 'CSR Funding Eligible' },
+const trustBadges = [
+  {
+    icon: AshokaEmblemIcon,
+    name: 'CIN',
+    number: 'U85500MH2023NPL413850',
+    statusLabel: 'MCA REGISTERED',
+  },
+  {
+    icon: UdyamMsmeIcon,
+    name: 'MSME',
+    number: 'UDYAM-MH-34-0031485',
+    statusLabel: 'MSME REGISTERED',
+  },
+  {
+    icon: NgoDarpanIcon,
+    name: 'NGO DARPAN',
+    number: 'MH/2023/0342816',
+    statusLabel: 'RECOGNIZED',
+  },
+  {
+    icon: TaxSealIcon,
+    name: '12A',
+    number: 'AAZCA6912HE20241',
+    statusLabel: 'CERTIFIED',
+  },
+  {
+    icon: TaxSealIcon,
+    name: '80G',
+    number: 'AAZCA6912HF20241',
+    statusLabel: 'CERTIFIED',
+  },
+  {
+    icon: CsrMcaIcon,
+    name: 'CSR',
+    number: 'CSR00076475',
+    statusLabel: 'REGISTERED',
+  },
+];
+
+const statusItems = [
+  'MCA Registered',
+  'Multi-Registered Organization',
+  'National Presence',
+  'Public Trust Compliant',
 ];
 
 const Header = () => {
@@ -74,74 +116,85 @@ const Header = () => {
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
       scrolled ? 'bg-white shadow-lg' : 'bg-white/98 backdrop-blur-sm'
     }`}>
-      {/* Level 1: Government Utility Bar */}
-      <div className="bg-primary-950 text-primary-300 border-b border-primary-800/50">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-9">
-            <div className="flex items-center gap-8 text-xs">
-              <a href="tel:1800123456" className="flex items-center gap-1.5 hover:text-white transition-colors">
-                <Phone className="w-3 w-3" />
-                <span className="font-medium">1800-123-456</span>
-                <span className="text-primary-500">Toll Free</span>
-              </a>
-              <a href="mailto:info@abhinavbharatfoundation.org" className="hidden md:flex items-center gap-1.5 hover:text-white transition-colors">
-                <Mail className="w-3 h-3" />
-                <span>info@abhinavbharatfoundation.org</span>
-              </a>
-            </div>
-            <div className="flex items-center gap-6 text-xs">
-              <button className="hidden sm:flex items-center gap-1.5 hover:text-white transition-colors">
-                <Accessibility className="w-3.5 h-3.5" />
-                <span>Accessibility</span>
-              </button>
-              <button className="flex items-center gap-1.5 hover:text-white transition-colors">
-                <Globe className="w-3.5 h-3.5" />
-                <span>English</span>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              <Link to="/login" className="flex items-center gap-1.5 hover:text-white transition-colors border-l border-primary-700 pl-6">
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Login</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <TopInfoBar />
 
-      {/* Level 2: Main Header */}
+      {/* Identity + Trust Badges */}
       <div className="bg-white border-b border-primary-100">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-20">
-            {/* Official Government-Style Logo Block */}
-            <Link to="/" className="flex items-center gap-3.5 group">
-              {/* Emblem */}
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-1.5">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4">
+
+            {/* Logo + Foundation Name */}
+            <Link to="/" className="flex items-center gap-2.5 group shrink-0">
               <div className="relative">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-950 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 ring-1 ring-primary-600/20">
-                  <Landmark className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                <div className="w-9 h-9 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-950 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 ring-1 ring-primary-600/20">
+                  <Landmark className="w-5 h-5 text-white" />
                 </div>
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent-green-500 rounded-full border-2 border-white flex items-center justify-center shadow-sm"
-                >
-                  <CheckCircle2 className="w-2 h-2 text-white" />
-                </motion.div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-accent-green-500 rounded-full border-2 border-white flex items-center justify-center shadow-sm">
+                  <CheckCircle2 className="w-1.5 h-1.5 text-white" />
+                </div>
               </div>
-              {/* Text Block */}
-              <div className="hidden sm:block">
-                <div className="text-[9px] sm:text-[10px] text-primary-500 font-semibold tracking-[0.2em] uppercase mb-0.5">
-                  Section 8 Non-Profit | Est. 2015
+              <div>
+                <div className="text-primary-900 font-bold text-sm tracking-tight leading-tight">
+                  ABHINAV BHARAT FOUNDATION
                 </div>
-                <div className="text-primary-900 font-bold text-base sm:text-lg tracking-tight leading-tight -mb-0.5">
-                  ABHINAV BHARAT
-                </div>
-                <div className="text-primary-700 font-semibold text-sm sm:text-base tracking-wide">
-                  FOUNDATION
+                <div className="text-[9px] text-primary-500 font-medium leading-tight mt-0.5">
+                  Registered with Ministry of Corporate Affairs, Govt. of India
                 </div>
               </div>
             </Link>
 
-            {/* Navigation */}
+            {/* Trust Badges */}
+            <div className="hidden md:flex items-stretch gap-1.5 lg:gap-2">
+              {trustBadges.map((badge, idx) => (
+                <motion.div
+                  key={badge.name}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.04 }}
+                  className="flex flex-col items-center justify-between w-[88px] lg:w-[96px] px-2 py-1 rounded border border-primary-100 bg-primary-50/60 hover:bg-primary-50 hover:border-primary-200 transition-all duration-200 cursor-default"
+                  title={`${badge.name} — ${badge.number}`}
+                >
+                  {/* Top: icon + name + VERIFIED pill */}
+                  <div className="flex items-center justify-between w-full gap-1 mb-0.5">
+                    <div className="flex items-center gap-1">
+                      <badge.icon className="w-3.5 h-3.5 text-primary-700 shrink-0" />
+                      <span className="text-[9px] font-bold text-primary-900 tracking-wide leading-none">
+                        {badge.name}
+                      </span>
+                    </div>
+                    <span className="text-[7px] font-bold bg-accent-green-500 text-white px-1 py-0.5 rounded-sm leading-none shrink-0">
+                      ✔
+                    </span>
+                  </div>
+                  {/* Registration number */}
+                  <div className="text-[7px] text-primary-500 font-medium truncate w-full text-center leading-none mb-0.5">
+                    {badge.number}
+                  </div>
+                  {/* Status */}
+                  <div className="text-[7px] font-bold text-accent-green-600 uppercase tracking-wide leading-none">
+                    {badge.statusLabel}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Status strip */}
+          <div className="hidden lg:flex items-center gap-4 mt-1 pb-0.5">
+            {statusItems.map((item) => (
+              <div key={item} className="flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-accent-green-500 shrink-0" />
+                <span className="text-[9px] font-semibold text-primary-600 tracking-wide">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="bg-primary-950 border-b border-primary-800">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between h-11">
             <nav className="hidden lg:flex items-center">
               {navLinks.map((item) => (
                 <div
@@ -152,20 +205,25 @@ const Header = () => {
                 >
                   <Link
                     to={item.path}
-                    className={`relative px-4 h-20 flex items-center text-sm font-medium transition-colors ${
+                    className={`relative px-4 h-11 flex items-center text-sm font-medium transition-colors ${
                       location.pathname === item.path
-                        ? 'text-primary-900'
-                        : 'text-primary-600 hover:text-primary-900'
+                        ? 'text-white'
+                        : 'text-primary-300 hover:text-white'
                     }`}
                   >
-                    {item.label}
+                    <span className="flex items-center gap-1.5">
+                      {item.label}
+                      {item.isNew && (
+                        <span className="text-[8px] font-bold bg-accent-green-500 text-white px-1 py-0.5 rounded leading-none">NEW</span>
+                      )}
+                    </span>
                     {item.submenu && (
                       <ChevronDown className={`w-4 h-4 ml-0.5 transition-transform ${activeMenu === item.label ? 'rotate-180' : ''}`} />
                     )}
                     {location.pathname === item.path && (
                       <motion.div
                         layoutId="activeIndicator"
-                        className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary-900"
+                        className="absolute bottom-0 left-4 right-4 h-0.5 bg-accent-saffron-400"
                       />
                     )}
                   </Link>
@@ -198,86 +256,20 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* CTA */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 ml-auto">
               <Link
                 to="/contact"
-                className="hidden xl:flex items-center gap-2 px-6 py-2.5 bg-primary-900 text-white text-sm font-semibold rounded hover:bg-primary-800 transition-colors"
+                className="hidden xl:flex items-center gap-2 px-6 py-1.5 bg-accent-saffron-500 text-primary-950 text-sm font-semibold rounded hover:bg-accent-saffron-400 transition-colors"
               >
                 Partner With Us
               </Link>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 text-primary-900 hover:bg-primary-50 rounded-lg transition-colors"
+                className="lg:hidden p-2 text-white hover:bg-primary-800 rounded-lg transition-colors"
               >
                 {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Level 3: Verification Strip */}
-      <div className="bg-primary-50/80 backdrop-blur-sm border-b border-primary-200/60">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-          {/* Desktop: Single Row */}
-          <div className="hidden lg:flex items-center justify-center py-2 gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-primary-400 shrink-0">
-              <Shield className="w-3 h-3" />
-              <span className="uppercase tracking-widest text-[10px]">Verified</span>
-            </div>
-            <div className="w-px h-3 bg-primary-200" />
-            {registrations.map((reg, idx) => (
-              <motion.div
-                key={reg.name}
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05 }}
-                className="flex items-center gap-1.5 px-2.5 py-1 bg-white/80 rounded border border-primary-100/80 hover:border-primary-300 hover:bg-white transition-all duration-200 cursor-default group"
-                title={reg.full}
-              >
-                <CheckCircle2 className="w-3 h-3 text-accent-green-500" />
-                <span className="text-[10px] font-semibold text-primary-600 group-hover:text-primary-900 transition-colors tracking-wide">
-                  {reg.name}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-          {/* Tablet: 3-column Grid */}
-          <div className="hidden md:grid lg:hidden grid-cols-3 gap-1.5 py-2">
-            {registrations.map((reg, idx) => (
-              <motion.div
-                key={reg.name}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.03 }}
-                className="flex items-center justify-center gap-1.5 px-2 py-1.5 bg-white/80 rounded border border-primary-100/80 hover:border-primary-300 transition-all duration-200 cursor-default group"
-                title={reg.full}
-              >
-                <CheckCircle2 className="w-3 h-3 text-accent-green-500" />
-                <span className="text-[10px] font-semibold text-primary-600 group-hover:text-primary-900 transition-colors">
-                  {reg.name}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-          {/* Mobile: 3-column Grid */}
-          <div className="md:hidden grid grid-cols-3 gap-1.5 py-2">
-            {registrations.map((reg, idx) => (
-              <motion.div
-                key={reg.name}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.04 }}
-                className="flex items-center justify-center gap-1 px-1.5 py-1.5 bg-white/80 rounded border border-primary-100/80 transition-all duration-200 cursor-default group"
-                title={reg.full}
-              >
-                <CheckCircle2 className="w-2.5 h-2.5 text-accent-green-500" />
-                <span className="text-[9px] font-semibold text-primary-600 group-hover:text-primary-900 transition-colors">
-                  {reg.name}
-                </span>
-              </motion.div>
-            ))}
           </div>
         </div>
       </div>
@@ -302,7 +294,12 @@ const Header = () => {
                         : 'text-primary-700 hover:bg-primary-50'
                     }`}
                   >
-                    {item.label}
+                    <span className="flex items-center gap-1.5">
+                      {item.label}
+                      {item.isNew && (
+                        <span className="text-[8px] font-bold bg-accent-green-500 text-white px-1 py-0.5 rounded leading-none">NEW</span>
+                      )}
+                    </span>
                   </Link>
                   {item.submenu && (
                     <div className="pl-4 space-y-1 mt-1">

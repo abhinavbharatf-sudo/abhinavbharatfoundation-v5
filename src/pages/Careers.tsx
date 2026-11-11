@@ -10,6 +10,7 @@ import {
   ArrowRight,
   CheckCircle2,
 } from 'lucide-react';
+import { sendOTP } from '../../services/whatapi';
 
 const jobOpenings = [
   {
@@ -72,9 +73,23 @@ const benefits = [
 ];
 
 const Careers = () => {
+  const handleSendOtpClick = async (phone: string, generatedOtpCode: string) => {
+    try {
+      const result = await sendOTP(phone, generatedOtpCode, {
+        orgName: "ABHINAV BHARAT FOUNDATION"
+      });
+      if (result.success) {
+        console.log('OTP sent successfully!', result.messageId);
+      } else {
+        console.error('Failed to send OTP:', result.error);
+      }
+    } catch (error) {
+      console.error('Unexpected error sending OTP:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Hero */}
       <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white py-24 overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
@@ -103,24 +118,8 @@ const Careers = () => {
         </div>
       </section>
 
-      {/* Why Join Us */}
       <section className="section-padding bg-primary-50">
         <div className="container-premium">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-heading-1 font-bold text-primary-900 mb-4">
-              Why Work With Us
-            </h2>
-            <p className="text-lg text-primary-600 max-w-2xl mx-auto">
-              More than a job - an opportunity to create lasting change
-            </p>
-          </motion.div>
-
           <div className="grid md:grid-cols-4 gap-6">
             {benefits.map((benefit, index) => (
               <motion.div
@@ -142,25 +141,8 @@ const Careers = () => {
         </div>
       </section>
 
-      {/* Current Openings */}
       <section className="section-padding bg-white">
         <div className="container-premium">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 rounded-full text-sm font-medium text-primary-700 mb-4">
-              <Users className="w-4 h-4" />
-              Current Openings
-            </div>
-            <h2 className="text-heading-1 font-bold text-primary-900">
-              Join Our Team
-            </h2>
-          </motion.div>
-
           <div className="space-y-4">
             {jobOpenings.map((job, index) => (
               <motion.div
@@ -169,29 +151,12 @@ const Careers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="bg-white rounded-xl border border-primary-100 overflow-hidden hover:shadow-card transition-shadow"
+                className="bg-white rounded-xl border border-primary-100 overflow-hidden"
               >
                 <div className="p-6">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                     <div>
                       <h3 className="text-xl font-bold text-primary-900 mb-2">{job.title}</h3>
-                      <div className="flex flex-wrap items-center gap-3 text-sm text-primary-500">
-                        <span className="flex items-center gap-1">
-                          <Building2 className="w-4 h-4" />
-                          {job.department}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          {job.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {job.type}
-                        </span>
-                        <span className="px-2 py-0.5 bg-primary-100 rounded text-primary-700">
-                          {job.experience}
-                        </span>
-                      </div>
                     </div>
                     <a
                       href={`mailto:careers@abhinavbharatfoundation.org?subject=Application: ${job.title}`}
@@ -201,48 +166,10 @@ const Careers = () => {
                     </a>
                   </div>
                   <p className="text-primary-600 mb-4">{job.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {job.requirements.map((req) => (
-                      <span
-                        key={req}
-                        className="inline-flex items-center gap-1 px-3 py-1 bg-primary-50 rounded-full text-xs font-medium text-primary-700"
-                      >
-                        <CheckCircle2 className="w-3 h-3 text-accent-green-500" />
-                        {req}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="section-padding bg-primary-900 text-white">
-        <div className="container-premium text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-heading-1 font-bold mb-6">
-              Don't See a Suitable Role?
-            </h2>
-            <p className="text-xl text-primary-200 mb-8 max-w-2xl mx-auto">
-              We're always looking for talented individuals passionate about rural development.
-              Send us your profile and we'll reach out when a suitable opportunity arises.
-            </p>
-            <a
-              href="mailto:careers@abhinavbharatfoundation.org"
-              className="btn-primary bg-white text-primary-900 hover:bg-primary-100"
-            >
-              Send Your Profile
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </a>
-          </motion.div>
         </div>
       </section>
     </div>

@@ -21,3 +21,10 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.env.*
+!.env.example
+!.env.staging.example
+database/backups/
+backend/vault_storage/
+scratch/
+

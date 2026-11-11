@@ -7,6 +7,7 @@ import FeaturedProjects from '../components/home/FeaturedProjects';
 import NewsSection from '../components/home/NewsSection';
 import TransparencySection from '../components/home/TransparencySection';
 import GalleryPreview from '../components/home/GalleryPreview';
+import StartupFundCTA from '../components/home/StartupFundCTA';
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <Impact />
       <MaharashtraMap />
       <FeaturedProjects />
+      <StartupFundCTA />
       <NewsSection />
       <TransparencySection />
       <GalleryPreview />

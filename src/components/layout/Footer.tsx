@@ -10,10 +10,9 @@ import {
   Youtube,
   Instagram,
   ChevronRight,
-  Shield,
-  Award,
-  Government,
+  ShieldCheck,
 } from 'lucide-react';
+import { IsoIcon, IafIcon } from '../layout/OfficialEmblems';
 
 const Footer = () => {
   const quickLinks = [
@@ -151,25 +150,28 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Verification Strip */}
-      <div className="border-t border-primary-800 py-6">
+      {/* Our Certifications */}
+      <div className="border-t border-primary-800 py-5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            <div className="flex items-center gap-2 text-primary-400">
-              <Shield className="w-4 h-4" />
-              <span>Section 8 Company</span>
-            </div>
-            <div className="flex items-center gap-2 text-primary-400">
-              <Award className="w-4 h-4" />
-              <span>NGO Darpan Verified</span>
-            </div>
-            <div className="flex items-center gap-2 text-primary-400">
-              <Shield className="w-4 h-4" />
-              <span>12A & 80G Certified</span>
-            </div>
-            <div className="flex items-center gap-2 text-primary-400">
-              <Award className="w-4 h-4" />
-              <span>CSR Eligible</span>
+          <div className="flex flex-col items-center gap-3">
+            <p className="text-[10px] font-semibold text-primary-400 uppercase tracking-[0.2em]">Our Certifications</p>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <div className="flex items-center gap-2 px-4 py-2 rounded border border-primary-700 bg-primary-900/60">
+                <IsoIcon className="w-4 h-4 text-blue-400" />
+                <div>
+                  <div className="text-[10px] font-bold text-white leading-none">ISO 9001:2015</div>
+                  <div className="text-[9px] text-primary-400 leading-none mt-0.5">Quality Certified</div>
+                </div>
+                <ShieldCheck className="w-3 h-3 text-blue-400 ml-1" />
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 rounded border border-primary-700 bg-primary-900/60">
+                <IafIcon className="w-4 h-4 text-blue-400" />
+                <div>
+                  <div className="text-[10px] font-bold text-white leading-none">IAF Accreditation</div>
+                  <div className="text-[9px] text-primary-400 leading-none mt-0.5">Internationally Accredited</div>
+                </div>
+                <ShieldCheck className="w-3 h-3 text-blue-400 ml-1" />
+              </div>
             </div>
           </div>
         </div>
